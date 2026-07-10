@@ -226,6 +226,28 @@ font-weight:600;
 text-decoration:none;
 color:#63d12f;
 }
+    @keyframes telegramGlow{
+
+    0%{
+        transform:scale(1);
+        box-shadow:0 0 8px #229ED9;
+    }
+
+    50%{
+        transform:scale(1.15);
+        box-shadow:
+        0 0 10px #229ED9,
+        0 0 20px #00BFFF,
+        0 0 35px #00E5FF,
+        0 0 50px #00E5FF;
+    }
+
+    100%{
+        transform:scale(1);
+        box-shadow:0 0 8px #229ED9;
+    }
+
+}
 
 
 .telegram{
@@ -240,12 +262,12 @@ color:#63d12f;
     justify-content:center;
     align-items:center;
     text-decoration:none;
-    animation: telegramGlow 1.5s infinite;
+    animation:telegramGlow 1.5s ease-in-out infinite;
 }
 
 .telegram i{
     color:#fff;
-    font-size:28px;
+    font-size:30px;
 }
 
 @media(max-width:450px){
@@ -273,9 +295,7 @@ font-size:16px;
 
 <div class="header">
 
-<div class="logo-glow">
-    <img src="IMG_1057.png" class="logo">
-</div>
+<img src="IMG_1057.png" class="logo">
 
 
 <div class="tagline">A stable and profitable platform</div>
@@ -307,7 +327,7 @@ font-size:16px;
 
 </div>
 
-<div class="tagline">A stable and profitable platform</div>
+
 <button id="loginBtn">SIGN IN</button>
 
 <div class="policy">
