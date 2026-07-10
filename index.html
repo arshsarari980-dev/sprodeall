@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Spro Deal Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#ffffff;
+display:flex;
+justify-content:center;
+min-height:100vh;
+}
+
+.container{
+width:100%;
+max-width:430px;
+background:#fff;
+position:relative;
+overflow:hidden;
+min-height:100vh;
+}
+
+.header{
+background:#63d12f;
+height:320px;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+color:white;
+border-bottom-left-radius:50% 14%;
+border-bottom-right-radius:50% 14%;
+}
+
+.logo{
+width:95px;
+height:95px;
+object-fit:contain;
+margin-bottom:12px;
+}
+
+.brand{
+font-size:30px;
+font-weight:600;
+}
+
+.tagline{
+font-size:18px;
+font-weight:300;
+margin-top:8px;
+}
+
+.content{
+padding:30px;
+margin-top:-10px;
+}
+
+h1{
+text-align:center;
+font-size:22px;
+font-weight:700;
+margin-bottom:35px;
+}
+
+.green{
+color:#58c42c;
+}
+
+label{
+display:block;
+font-size:17px;
+margin-bottom:12px;
+color:#444;
+}
+
+.inputBox{
+height:58px;
+border:2px solid #e6e6e6;
+border-radius:40px;
+display:flex;
+align-items:center;
+padding:0 20px;
+margin-bottom:24px;
+}
+
+.country{
+font-weight:600;
+font-size:18px;
+color:#444;
+margin-right:10px;
+}
+
+.divider{
+width:1px;
+height:26px;
+background:#cfcfcf;
+margin-right:12px;
+}
+
+input{
+border:none;
+outline:none;
+width:100%;
+font-size:17px;
+background:transparent;
+}
+
+button{
+width:100%;
+height:60px;
+border:none;
+border-radius:12px;
+background:#d7d7d7;
+font-size:20px;
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+button.active{
+background:#63d12f;
+}
+
+.policy{
+margin-top:28px;
+display:flex;
+align-items:flex-start;
+font-size:15px;
+color:#666;
+line-height:22px;
+}
+
+.check{
+color:#63d12f;
+font-size:22px;
+margin-right:8px;
+}
+
+.policy a{
+text-decoration:none;
+color:#63d12f;
+}
+
+.create{
+margin-top:32px;
+text-align:center;
+}
+
+.create a{
+font-size:18px;
+font-weight:600;
+text-decoration:none;
+color:#63d12f;
+}
+
+.telegram{
+position:fixed;
+right:25px;
+bottom:30px;
+width:72px;
+height:72px;
+border-radius:50%;
+background:#1DA1F2;
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+text-decoration:none;
+font-size:34px;
+color:white;
+}
+
+@media(max-width:450px){
+
+.content{
+padding:22px;
+}
+
+.header{
+height:290px;
+}
+
+.tagline{
+font-size:16px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<img src="weblogo.jpg" class="logo">
+
+<div class="brand">Spro Deal</div>
+
+<div class="tagline">A stable and profitable platform</div>
+
+</div>
+
+<div class="content">
+
+<h1>SIGN IN TO <span class="green">SPRO DEAL</span></h1>
+
+<label>Phone</label>
+
+<div class="inputBox">
+
+<div class="country">+91</div>
+
+<div class="divider"></div>
+
+<input id="phone" placeholder="Please enter phone number">
+
+</div>
+
+<label>Password</label>
+
+<div class="inputBox">
+
+<input type="password" id="password" placeholder="Please enter password">
+
+</div>
+
+<button id="loginBtn">SIGN IN</button>
+
+<div class="policy">
+
+<div class="check">✔</div>
+
+<div>
+By logging in you agree to our
+<a href="#">Privacy Policy</a>
+</div>
+
+</div>
+
+<div class="create">
+<a href="#">Create new account?</a>
+</div>
+
+</div>
+
+<a class="telegram" href="#">
+✈
+</a>
+
+</div>
+
+<script>
+
+const phone=document.getElementById("phone");
+const password=document.getElementById("password");
+const btn=document.getElementById("loginBtn");
+
+function validate(){
+
+if(phone.value.trim()!=="" && password.value.trim()!==""){
+btn.classList.add("active");
+}else{
+btn.classList.remove("active");
+}
+
+}
+
+phone.addEventListener("input",validate);
+password.addEventListener("input",validate);
+
+btn.addEventListener("click",function(){
+
+if(!btn.classList.contains("active")){
+return;
+}
+
+alert("Login button clicked.");
+
+});
+
+</script>
+
+</body>
+</html>
