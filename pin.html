@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Spro Deal - PIN</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f5f5;
+display:flex;
+justify-content:center;
+min-height:100vh;
+}
+
+.container{
+width:100%;
+max-width:430px;
+background:#fff;
+min-height:100vh;
+position:relative;
+overflow:hidden;
+}
+
+.header{
+background:#63d12f;
+height:230px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:#fff;
+border-bottom-left-radius:45% 10%;
+border-bottom-right-radius:45% 10%;
+}
+
+.logo{
+width:80px;
+margin-bottom:12px;
+}
+
+.brand{
+font-size:30px;
+font-weight:600;
+}
+
+.tagline{
+font-size:18px;
+font-weight:300;
+margin-top:8px;
+}
+
+
+.card{
+width:92%;
+margin:-45px auto 0;
+background:#fff;
+border-radius:22px;
+padding:30px 18px;
+box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.card h2{
+text-align:center;
+font-size:28px;
+font-weight:700;
+margin-bottom:6px;
+color:#111;
+}
+
+.card p{
+text-align:center;
+font-size:16px;
+font-weight:600;
+margin-bottom:22px;
+color:#444;
+}
+
+.pin-box{
+display:flex;
+justify-content:space-between;
+gap:8px;
+}
+
+.pin-box input{
+flex:1;
+max-width:48px;
+height:56px;
+border:2px solid #d9d9d9;
+border-radius:12px;
+font-size:24px;
+font-weight:700;
+text-align:center;
+outline:none;
+transition:.25s;
+}
+
+.pin-box input:focus{
+border-color:#63d12f;
+box-shadow:0 0 8px rgba(99,209,47,.35);
+}
+
+.forgot{
+
+text-align:center;
+margin-top:30px;
+
+}
+
+.forgot a{
+
+text-decoration:none;
+color:#63d12f;
+font-weight:600;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<img src="IMG_1057.png" class="logo">
+
+<div class="brand">Spro Deal</div>
+
+<div class="tagline">
+A stable and profitable platform
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>ENTER YOUR PIN</h2>
+
+<p>PIN</p>
+
+<div class="pin-box">
+
+<input type="password" maxlength="1">
+<input type="password" maxlength="1">
+<input type="password" maxlength="1">
+<input type="password" maxlength="1">
+<input type="password" maxlength="1">
+<input type="password" maxlength="1">
+
+</div>
+
+<div class="forgot">
+<a href="#">Forgot PIN?</a>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const inputs=document.querySelectorAll(".pin-box input");
+
+inputs.forEach((input,index)=>{
+
+input.setAttribute("inputmode","numeric");
+input.setAttribute("autocomplete","off");
+
+input.addEventListener("input",function(){
+
+this.value=this.value.replace(/\D/g,'');
+
+if(this.value.length>1){
+this.value=this.value.charAt(0);
+}
+
+if(this.value!=="" && index<inputs.length-1){
+inputs[index+1].focus();
+}
+
+let pin="";
+
+inputs.forEach(box=>{
+pin+=box.value;
+});
+
+if(pin.length===6){
+
+setTimeout(()=>{
+window.location.href="dashboard.html";
+},300);
+
+}
+
+});
+
+input.addEventListener("keydown",function(e){
+
+if(e.key==="Backspace" && this.value===""){
+if(index>0){
+inputs[index-1].focus();
+}
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
