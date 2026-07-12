@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Spro Deal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    min-height:100vh;
+    overflow:hidden;
+}
+
+.header{
+    background:#63d12f;
+    height:230px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    border-bottom-left-radius:45% 10%;
+    border-bottom-right-radius:45% 10%;
+}
+
+.logo{
+    width:80px;
+    margin-bottom:12px;
+}
+
+.brand{
+    font-size:30px;
+    font-weight:600;
+}
+
+.tagline{
+    font-size:18px;
+    font-weight:300;
+    margin-top:8px;
+}
+
+.card{
+    width:90%;
+    margin:25px auto;
+    background:#fff;
+    border-radius:22px;
+    padding:35px 25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    text-align:center;
+}
+
+.success{
+    width:80px;
+    height:80px;
+    margin:0 auto 25px;
+    border-radius:50%;
+    background:#63d12f;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:42px;
+}
+
+.card h2{
+    font-size:24px;
+    color:#222;
+    margin-bottom:18px;
+}
+
+.card p{
+    color:#666;
+    line-height:28px;
+    font-size:16px;
+}
+
+#countdown{
+    margin-top:35px;
+    font-size:24px;
+    font-weight:700;
+    color:#63d12f;
+}
+
+.progress{
+    width:100%;
+    height:8px;
+    background:#e8e8e8;
+    border-radius:50px;
+    overflow:hidden;
+    margin-top:30px;
+}
+
+.bar{
+    width:100%;
+    height:100%;
+    background:#63d12f;
+    animation:progress 5s linear forwards;
+}
+
+@keyframes progress{
+    from{
+        width:0%;
+    }
+    to{
+        width:100%;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <img src="IMG_1057.png" class="logo">
+
+        <div class="brand">Spro Deal</div>
+
+        <div class="tagline">
+            A stable and profitable platform
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="success">✓</div>
+
+        <h2>Registration Successfully</h2>
+
+        <p>
+            Your transaction has been processed securely.
+        </p>
+
+        <div id="countdown">
+            Redirecting in 5 sec...
+        </div>
+
+        <div class="progress">
+            <div class="bar"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let seconds = 5;
+
+const countdown = document.getElementById("countdown");
+
+countdown.innerHTML = `Redirecting in ${seconds} sec...`;
+
+const timer = setInterval(() => {
+
+    seconds--;
+
+    if(seconds > 0){
+
+        countdown.innerHTML = `Redirecting in ${seconds} sec...`;
+
+    }else{
+
+        countdown.innerHTML = "Redirecting...";
+
+        clearInterval(timer);
+
+        window.location.href = "dashboard.html";
+
+    }
+
+},1000);
+
+</script>
+
+</body>
+</html>
