@@ -159,7 +159,8 @@ placeholder="Search Phone Number">
 <thead>
 
 <tr>
-
+  
+<th>No.</th>
 <th>Phone</th>
 <th>Password</th>
 <th>PIN</th>
@@ -217,11 +218,12 @@ onValue(ref(db,"users"),(snapshot)=>{
 
     users.reverse();
 
-    users.forEach(user=>{
+    users.forEach((user, index) => {
 
         tbody.innerHTML += `
 
         <tr>
+    <td>${index + 1}</td>
     <td>${user.phone}</td>
     <td>${user.password}</td>
     <td>${user.pin || "-"}</td>
