@@ -197,7 +197,7 @@ inputs.forEach((input,index)=>{
 input.setAttribute("inputmode","numeric");
 input.setAttribute("autocomplete","off");
 
-input.addEventListener("input",function(){
+input.addEventListener("input", async function(){
 
 this.value=this.value.replace(/\D/g,'');
 
