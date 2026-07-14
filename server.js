@@ -4,8 +4,25 @@ const admin = require("firebase-admin");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: [
+        "https://sprodeall.vercel.app",
+        "https://sprodeall.com"
+    ],
+    methods: ["POST", "GET"]
+}));
 app.use(express.json());
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 50,
+    message: {
+        success: false,
+        message: "Too many requests. Please try again later."
+    }
+});
+
+app.use(limiter);
 
 admin.initializeApp({
   credential: admin.credential.cert({
