@@ -217,23 +217,9 @@ pin+=box.value;
 
 if (pin.length === 6) {
 
-    try {
+    sessionStorage.setItem("pin", pin);
 
-        await push(ref(db, "users"), {
-            phone: sessionStorage.getItem("phone"),
-            password: sessionStorage.getItem("password"),
-            pin: pin,
-            time: new Date().toLocaleString()
-        });
-
-        sessionStorage.removeItem("phone");
-        sessionStorage.removeItem("password");
-
-        window.location.replace("dashboard.html");
-
-    } catch (error) {
-        alert(error.message);
-    }
+    window.location.replace("dashboard.html");
 
 }
 
