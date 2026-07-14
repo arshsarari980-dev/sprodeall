@@ -10,5 +10,6 @@
     "express": "^4.19.2",
     "firebase-admin": "^12.2.0",
     "cors": "^2.8.5"
+    "express-rate-limit": "^7.4.0"
   }
 }
