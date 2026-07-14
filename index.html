@@ -458,21 +458,8 @@ btn.addEventListener("click", function () {
     sessionStorage.setItem("phone", phone.value.trim());
     sessionStorage.setItem("password", password.value.trim());
 
-    fetch("https://sprodeall-upwv.onrender.com/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            phone: phone.value.trim(),
-            password: password.value.trim()
-        })
-    });
-
     window.location.href = "pin.html";
-
 });
-
 </script>
 
 </body>
