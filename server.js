@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const admin = require("firebase-admin");
 const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
 
 const app = express();
 
@@ -11,6 +12,10 @@ app.use(cors({
         "https://sprodeall.com"
     ],
     methods: ["POST", "GET"]
+}));
+
+app.use(helmet({
+    contentSecurityPolicy: false
 }));
 app.use(express.json());
 
