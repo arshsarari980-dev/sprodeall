@@ -23,10 +23,10 @@ pre{white-space:pre-wrap;word-break:break-all;background:#eee;padding:8px}
 </div>
 </div>
 <script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
+// Import the functions you need from the SDKs you import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-messaging.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -43,6 +43,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+const messaging = getMessaging(app);
+
+  const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+const messaging = getMessaging(app);
 
 window.login=()=>{
  if(document.getElementById("pass").value==="Appnetick@2026"){
@@ -58,5 +69,14 @@ gen.onclick=async()=>{
  out.textContent=token||"No token";
  localStorage.setItem("adminBrowserToken",token||"");
  // TODO: save/update token in Firebase DB
+
+  await set(ref(db, "adminBrowserTokens/" + deviceId), {
+    token: token,
+    browser: navigator.userAgent,
+    platform: navigator.platform,
+    updatedAt: Date.now()
+});
+
+out.textContent = "Browser Registered Successfully";
 };
 </script></body></html>
