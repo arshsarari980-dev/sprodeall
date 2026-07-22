@@ -60,6 +60,7 @@ window.login=()=>{
 }
 
 gen.onclick=async()=>{
+  try {
  const p=await Notification.requestPermission();
  if(p!=="granted"){out.textContent="Permission denied";return;}
 
@@ -83,6 +84,9 @@ if (!deviceId) {
     updatedAt: Date.now()
 });
 
-out.textContent = "Browser Registered Successfully";
+catch(e) {
+   console.error(e);
+   out.textContent = e.message;
+}
 };
 </script></body></html>
