@@ -1,1 +1,18 @@
-
+{
+  "name": "sprodeal-notification-api",
+  "version": "1.0.0",
+  "description": "Spro Deal Notification API",
+  "main": "notification-server.js",
+  "scripts": {
+    "start": "node notification-server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "firebase-admin": "^13.0.0",
+    "helmet": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
