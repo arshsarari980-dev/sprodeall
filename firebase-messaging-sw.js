@@ -1,4 +1,3 @@
-
 importScripts("https://www.gstatic.com/firebasejs/12.2.1/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/12.2.1/firebase-messaging-compat.js");
 
@@ -16,14 +15,38 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-  console.log("Background Message:", payload);
+  console.log("[firebase-messaging-sw.js] Received background message: ", payload);
 
-  self.registration.showNotification(
-    payload.notification.title,
-    {
-      body: payload.notification.body,
-      icon: "/IMG_1057.png",
-      badge: "/IMG_1057.png"
-    }
+  const title = payload.notification?.title || payload.data?.title || "Notification";
+  const options = {
+    body: payload.notification?.body || payload.data?.body || "",
+    icon: "/IMG_1057.png",
+    badge: "/IMG_1057.png",
+    data: payload.data || {}
+  };
+
+  self.registration.showNotification(title, options);
+});
+
+// Handle notification click event
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  // If a custom URL was provided in data payload, open it, otherwise open root
+  const urlToOpen = event.notification.data?.url || "/";
+
+  event.waitUntil(
+    clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
+      // Focus existing open tab if available
+      for (const client of clientList) {
+        if (client.url === urlToOpen && "focus" in client) {
+          return client.focus();
+        }
+      }
+      // Otherwise open a new window/tab
+      if (clients.openWindow) {
+        return clients.openWindow(urlToOpen);
+      }
+    })
   );
 });
