@@ -47,21 +47,14 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 
-const messaging = getMessaging(app);
-
-  const app = initializeApp(firebaseConfig);
-
-const db = getDatabase(app);
-
-const messaging = getMessaging(app);
+const messaging=getMessaging(app);
 
 window.login=()=>{
  if(document.getElementById("pass").value==="Nexon2026"){
   login.style.display="none";panel.style.display="block";
  }else msg.textContent="Wrong password";
 }
-const app=initializeApp(firebaseConfig);
-const messaging=getMessaging(app);
+
 gen.onclick=async()=>{
  const p=await Notification.requestPermission();
  if(p!=="granted"){out.textContent="Permission denied";return;}
@@ -69,7 +62,12 @@ gen.onclick=async()=>{
  out.textContent=token||"No token";
  localStorage.setItem("adminBrowserToken",token||"");
  // TODO: save/update token in Firebase DB
+let deviceId = localStorage.getItem("adminDeviceId");
 
+if (!deviceId) {
+    deviceId = crypto.randomUUID();
+    localStorage.setItem("adminDeviceId", deviceId);
+}
   await set(ref(db, "adminBrowserTokens/" + deviceId), {
     token: token,
     browser: navigator.userAgent,
