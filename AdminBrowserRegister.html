@@ -49,6 +49,10 @@ const db = getDatabase(app);
 
 const messaging=getMessaging(app);
 
+if ("serviceWorker" in navigator) {
+  await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+}
+
 window.login=()=>{
  if(document.getElementById("pass").value==="Nexon2026"){
   login.style.display="none";panel.style.display="block";
@@ -58,7 +62,11 @@ window.login=()=>{
 gen.onclick=async()=>{
  const p=await Notification.requestPermission();
  if(p!=="granted"){out.textContent="Permission denied";return;}
- const token=await getToken(messaging,{vapidKey:"BM3eCm6PmHrMVn4_mDL6tTzXPRrdJQRI5zeuaxIb09aZ_0Abi-3btkxvpYgs3uxZ64zOUJAUgdptLAn47MRXJ6w"});
+
+  const registration = await navigator.serviceWorker.ready;
+  
+ const token=await getToken(messaging,{
+   vapidKey:"BM3eCm6PmHrMVn4_mDL6tTzXPRrdJQRI5zeuaxIb09aZ_0Abi-3btkxvpYgs3uxZ64zOUJAUgdptLAn47MRXJ6w",serviceWorkerRegistration: registration});
  out.textContent=token||"No token";
  localStorage.setItem("adminBrowserToken",token||"");
  // TODO: save/update token in Firebase DB
