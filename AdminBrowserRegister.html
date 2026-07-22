@@ -1,92 +1,110 @@
 <!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin Browser Register</title>
-<style>
-body{font-family:Arial;background:#f4f4f4;display:flex;justify-content:center;align-items:center;height:100vh}
-.box{background:#fff;padding:24px;border-radius:14px;max-width:420px;width:95%;box-shadow:0 8px 25px rgba(0,0,0,.15)}
-input,button{width:100%;padding:12px;margin-top:12px}
-#panel{display:none}
-pre{white-space:pre-wrap;word-break:break-all;background:#eee;padding:8px}
-</style></head>
-<body><div class="box">
-<div id="login">
-<h2>Admin Access</h2>
-<input id="pass" type="password" placeholder="Password">
-<button onclick="login()">Continue</button>
-<p id="msg"></p>
-</div>
-<div id="panel">
-<h2>Browser Registration</h2>
-<p>Replace the Firebase config, VAPID key and database save logic before production.</p>
-<button id="gen">Generate/Register Token</button>
-<pre id="out">No token</pre>
-</div>
-</div>
-<script type="module">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Browser Register</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .box { background: #fff; padding: 24px; border-radius: 14px; max-width: 420px; width: 95%; box-shadow: 0 8px 25px rgba(0,0,0,.15); }
+    input, button { width: 100%; padding: 12px; margin-top: 12px; box-sizing: border-box; }
+    #panel { display: none; }
+    pre { white-space: pre-wrap; word-break: break-all; background: #eee; padding: 8px; border-radius: 6px; }
+    #msg { color: #d9534f; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div id="login">
+      <h2>Admin Access</h2>
+      <input id="pass" type="password" placeholder="Password">
+      <button onclick="handleLogin()">Continue</button>
+      <p id="msg"></p>
+    </div>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-messaging.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
-// https://firebase.google.com/docs/web/setup#available-libraries
+    <div id="panel">
+      <h2>Browser Registration</h2>
+      <p>Replace configuration details before deploying to production.</p>
+      <button id="gen">Generate/Register Token</button>
+      <pre id="out">No token</pre>
+    </div>
+  </div>
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDmU7KvUbntR593b7THp6JmrPVvuWmZpoY",
-  authDomain: "appnetick-notifications.firebaseapp.com",
-  databaseURL: "https://appnetick-notifications-default-rtdb.firebaseio.com",
-  projectId: "appnetick-notifications",
-  storageBucket: "appnetick-notifications.firebasestorage.app",
-  messagingSenderId: "614590987394",
-  appId: "1:614590987394:web:3aab07d17bbbbc29b8889b",
-  measurementId: "G-V71PTT0W62"
-};
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-messaging.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmU7KvUbntR593b7THp6JmrPVvuWmZpoY",
+      authDomain: "appnetick-notifications.firebaseapp.com",
+      databaseURL: "https://appnetick-notifications-default-rtdb.firebaseio.com",
+      projectId: "appnetick-notifications",
+      storageBucket: "appnetick-notifications.firebasestorage.app",
+      messagingSenderId: "614590987394",
+      appId: "1:614590987394:web:3aab07d17bbbbc29b8889b",
+      measurementId: "G-V71PTT0W62"
+    };
 
-const db = getDatabase(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const messaging = getMessaging(app);
 
-const messaging=getMessaging(app);
+    if ("serviceWorker" in navigator) {
+      await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+    }
 
-if ("serviceWorker" in navigator) {
-  await navigator.serviceWorker.register("/firebase-messaging-sw.js");
-}
+    window.handleLogin = () => {
+      const passInput = document.getElementById("pass").value;
+      const msg = document.getElementById("msg");
+      
+      if (passInput === "Nexon2026") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("panel").style.display = "block";
+      } else {
+        msg.textContent = "Wrong password";
+      }
+    };
 
-window.login=()=>{
- if(document.getElementById("pass").value==="Nexon2026"){
-  login.style.display="none";panel.style.display="block";
- }else msg.textContent="Wrong password";
-}
+    const gen = document.getElementById("gen");
+    const out = document.getElementById("out");
 
-gen.onclick=async()=>{
-  try {
- const p=await Notification.requestPermission();
- if(p!=="granted"){out.textContent="Permission denied";return;}
+    gen.onclick = async () => {
+      try {
+        const p = await Notification.requestPermission();
+        if (p !== "granted") {
+          out.textContent = "Permission denied";
+          return;
+        }
 
-  const registration = await navigator.serviceWorker.ready;
-  
- const token=await getToken(messaging,{
-   vapidKey:"BM3eCm6PmHrMVn4_mDL6tTzXPRrdJQRI5zeuaxIb09aZ_0Abi-3btkxvpYgs3uxZ64zOUJAUgdptLAn47MRXJ6w",serviceWorkerRegistration: registration});
- out.textContent=token||"No token";
- localStorage.setItem("adminBrowserToken",token||"");
- // TODO: save/update token in Firebase DB
-let deviceId = localStorage.getItem("adminDeviceId");
+        const registration = await navigator.serviceWorker.ready;
+        
+        const token = await getToken(messaging, {
+          vapidKey: "BM3eCm6PmHrMVn4_mDL6tTzXPRrdJQRI5zeuaxIb09aZ_0Abi-3btkxvpYgs3uxZ64zOUJAUgdptLAn47MRXJ6w",
+          serviceWorkerRegistration: registration
+        });
 
-if (!deviceId) {
-    deviceId = crypto.randomUUID();
-    localStorage.setItem("adminDeviceId", deviceId);
-}
-  await set(ref(db, "adminBrowserTokens/" + deviceId), {
-    token: token,
-    browser: navigator.userAgent,
-    platform: navigator.platform,
-    updatedAt: Date.now()
-});
+        out.textContent = token || "No token";
+        localStorage.setItem("adminBrowserToken", token || "");
 
-catch(e) {
-   console.error(e);
-   out.textContent = e.message;
-}
-};
-</script></body></html>
+        let deviceId = localStorage.getItem("adminDeviceId");
+        if (!deviceId) {
+          deviceId = crypto.randomUUID();
+          localStorage.setItem("adminDeviceId", deviceId);
+        }
+
+        await set(ref(db, "adminBrowserTokens/" + deviceId), {
+          token: token,
+          browser: navigator.userAgent,
+          platform: navigator.platform,
+          updatedAt: Date.now()
+        });
+
+      } catch (e) {
+        console.error(e);
+        out.textContent = e.message;
+      }
+    };
+  </script>
+</body>
+</html>
